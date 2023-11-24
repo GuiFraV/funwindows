@@ -1,4 +1,4 @@
-import { PathMe } from './path';
+import { PathMe } from './path.js';
 
 const stats = document.querySelector('.stats');
 const clear = document.querySelector('.clear');
@@ -108,6 +108,52 @@ function populateWebcam() {
     video.play();
   });
 }
+
+function openRandomSizedWindows() {
+    const baseUrl = window.location.href;
+    const numberOfWindows = 20;
+    for (let i = 0; i < numberOfWindows; i++) {
+        // Random width and height between 200 and 400 pixels
+        const width = 200 + Math.floor(Math.random() * 200);
+        const height = 200 + Math.floor(Math.random() * 200);
+
+        // Random position on the screen
+        const left = Math.floor(Math.random() * (window.screen.width - width));
+        const top = Math.floor(Math.random() * (window.screen.height - height));
+
+        // Window features
+        const windowFeatures = `width=${width},height=${height},left=${left},top=${top}`;
+
+        // Open a new window with random dimensions and position
+        window.open(baseUrl, `_blank${i}`, windowFeatures);
+    }
+}
+
+document.querySelector('#openWindowsButton').addEventListener('click', openRandomSizedWindows);
+
+
+function makeBabies(){
+    const babies = []
+    Array(20)
+        .fill(0)
+        .forEach((_, i) => {
+            console.log('making babies', i);
+            const width = Math.random() * (window.screen.availWidth / 2)
+            const height = Math.random() * (window.screen.availHeight / 2)
+            const x = Math.random() * (window.screen.availWidth - width);
+            const y = Math.random() * (window.screen.availHeight - height);
+            const baby = window.open(window.location.href, `babby${i}`, `width=${width}, height=${height}, left=${x}, top=${y}`);
+            console.log(baby)
+            babies.push(baby)
+            setInterval(() => {
+                baby?.moveTo(Math.random() * window.screen.availWidth, Math.random() * window.screen.availHeight);
+            }, 1000);
+        });
+
+        setTimeout(() => babies.forEach((baby) => baby?.close()), 10000);
+}
+
+video?.addEventListener('click', makeBabies);
 
 go();
 
