@@ -1,4 +1,4 @@
-class PathMe {
+export class PathMe {
   constructor() {
     this.moves = [];
   }
